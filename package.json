@@ -1,0 +1,8 @@
+{
+  "name": "danmaku-viewer",
+  "version": "0.0.1",
+  "author": "xys20071111",
+  "license": "MIT",
+  "private": true,
+  "workspaces": ["packages/**"]
+}
