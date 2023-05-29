@@ -42,6 +42,9 @@ const color = ref("superchat ")
 if(props.price <= 50) {
     color.value += 'blue-background'
 }
+if(props.price > 50 && props.price < 100) {
+    color.value += 'yellow-background'
+}
 if(props.price >= 100) {
     color.value += 'red-background'
 }
@@ -81,10 +84,14 @@ if(props.price >= 100) {
 }
 
 .blue-background {
-    background-color: #1565c0;
+    background-color: #82b7f3;
 }
 
 .red-background {
     background-color: rgb(255, 89, 89);
+}
+
+.yellow-background {
+    background-color: rgb(255, 255, 132);
 }
 </style>

@@ -4,6 +4,7 @@
     <input id="roomIdInput" type="number" v-model="room" />
     <button @click="connect">连接</button>
     <button @click="disconnect">断开连接</button>
+    <span>状态: {{ status }}</span>
   </header>
   <main>
     <div class="left-box">
@@ -31,7 +32,8 @@
         <span class="white-text">礼物</span>
         <div class="box" ref="giftBox">
           <div v-for="item in gift">
-            <Gift :price="item.price !== 0 ? item.price / 1000 : 0" :nickname="item.uname" :gift-name="item.giftName" :gift-count="item.count" />
+            <Gift :price="item.price !== 0 ? item.price / 1000 : 0" :nickname="item.uname" :gift-name="item.giftName"
+              :gift-count="item.count" />
           </div>
         </div>
       </div>
@@ -85,6 +87,7 @@ const guard: Ref<Array<{
   face: string
 }>> = ref([])
 const room = ref(localStorage.getItem('room') || '')
+const status = ref('未连接')
 
 function connect() {
   window.localStorage.setItem('room', room.value)
@@ -95,6 +98,12 @@ function disconnect() {
 }
 
 onMounted(() => {
+  window.control.danmakuEventBus.on('connected', () => {
+    status.value = "已连接"
+  })
+  window.control.danmakuEventBus.on('close', () => {
+    status.value = '未连接'
+  })
   window.control.danmakuEventBus.on('danmaku', (uname: string, text: string, face: string, medalName: string, medalLevel: number) => {
     danmakus.value.push({ uname, text, face, medalLevel, medalName })
     if (danmakus.value.length > 30) {

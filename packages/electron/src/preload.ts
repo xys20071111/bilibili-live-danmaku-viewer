@@ -32,3 +32,11 @@ ipcRenderer.on('guard', (_event, uname, giftName, num, face) => {
 ipcRenderer.on('superchat', (_event, uname, text, face, price) => {
     danmakuEventBus.emit('superchat', uname, text, face, price)
 })
+
+ipcRenderer.on('connected', () => {
+    danmakuEventBus.emit('connected')
+})
+
+ipcRenderer.on('close', () => {
+    danmakuEventBus.emit('close')
+})

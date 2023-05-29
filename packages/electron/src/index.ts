@@ -33,6 +33,13 @@ async function main() {
     } else {
         win.loadFile('index.html')
     }
+
+    danmakuReceiver.on('connected', () => {
+        win.webContents.send('connected')
+    })
+    danmakuReceiver.on('close', () => {
+        win.webContents.send('close')
+    })
     ipcMain.on('connect', (_event, room: number) => {
         danmakuReceiver.connect(room)
     })
@@ -46,7 +53,7 @@ async function main() {
             win.webContents.send('danmaku', data[2][1], data[1], face, data[3][1], data[3][0])
             sendToClient({
                 msg: 'danmaku',
-                data: { uname: data[2][1], face, text: data[1] }
+                data: { uname: data[2][1], face, text: data[1], medalName: data[3][1], medalLevel: data[3][0] }
             })
         }).catch(() => {
             win.webContents.send('danmaku', data[2][1], data[1], null, data[3][1], data[3][0])
@@ -61,7 +68,7 @@ async function main() {
         win.webContents.send('gift', uname, giftName, num, price, super_gift_num)
         sendToClient({
             msg: 'gift',
-            data: { uname, giftName, num }
+            data: { uname, giftName, num, price: super_gift_num === 0 ? 0 : num * price / 1000 }
         })
     })
     danmakuReceiver.on('GUARD_BUY', (data: any) => {

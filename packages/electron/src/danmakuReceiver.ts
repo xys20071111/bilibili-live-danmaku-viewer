@@ -27,6 +27,9 @@ class DanmakuReceiver extends EventEmitter {
 	}
 
 	public async connect(roomId: number) {
+		if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+			return
+		}
 		console.log(`[弹幕接收器]房间: ${roomId}`)
 		// 请求弹幕服务器地址
 		const request = https.request(`https://api.live.bilibili.com/xlive/web-room/v1/index/getDanmuInfo?id=${roomId}&type=0`, {

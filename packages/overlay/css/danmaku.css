@@ -1,0 +1,26 @@
+.avatar {
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    border-radius: 200px;
+    vertical-align: middle;
+    position: relative;
+}
+
+.medal {
+    margin-right: 5px;
+    border: solid;
+    border-width: 1px;
+    border-color: white;
+    border-radius: 5px;
+    font-size: 12px;
+    color: white;
+}
+
+.nickname {
+    padding: 5px;
+}
+.danmaku {
+    border: solid 1px;
+    border-radius: 10px;
+}
