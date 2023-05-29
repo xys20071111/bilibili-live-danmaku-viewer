@@ -16,5 +16,6 @@ export default defineConfig({
     proxy: {
       '/cache': 'http://localhost:4351'
     }
-  }
+  },
+  base: './'
 })

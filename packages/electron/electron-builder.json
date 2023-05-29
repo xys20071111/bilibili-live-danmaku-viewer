@@ -1,0 +1,7 @@
+{
+    "appId": "top.playtbsxys.danmakuViewer",
+    "files": ["dist/**/*"],
+    "directories": {
+        "output": "electron_dist"
+    }
+}

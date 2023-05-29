@@ -91,6 +91,10 @@ const status = ref('未连接')
 
 function connect() {
   window.localStorage.setItem('room', room.value)
+  danmakus.value.length = 0
+  superchat.value.length = 0
+  gift.value.length = 0
+  guard.value.length = 0
   window.control.connect(parseInt(room.value))
 }
 function disconnect() {
@@ -105,7 +109,7 @@ onMounted(() => {
     status.value = '未连接'
   })
   window.control.danmakuEventBus.on('danmaku', (uname: string, text: string, face: string, medalName: string, medalLevel: number) => {
-    danmakus.value.push({ uname, text, face, medalLevel, medalName })
+    danmakus.value.push({ uname, text, face: `http://localhost:4351/${face}`, medalLevel, medalName })
     if (danmakus.value.length > 30) {
       danmakus.value.splice(0, 1)
     }
@@ -115,14 +119,14 @@ onMounted(() => {
   })
 
   window.control.danmakuEventBus.on('superchat', (uname: string, msg: string, face: string, price: number, medalLevel: number, medalName: string) => {
-    superchat.value.push({ uname, msg, face, price, medalLevel, medalName })
+    superchat.value.push({ uname, msg, face: `http://localhost:4351/${face}`, price, medalLevel, medalName })
     nextTick(() => {
       superchatBox.value.scrollTop = superchatBox.value.scrollHeight
     })
   })
 
   window.control.danmakuEventBus.on('guard', (uname: string, type: string, num: number, face: string) => {
-    guard.value.push({ uname, type, num, face })
+    guard.value.push({ uname, type, num, face: `http://localhost:4351/${face}` })
     nextTick(() => {
       guardBox.value.scrollTop = guardBox.value.scrollHeight
     })

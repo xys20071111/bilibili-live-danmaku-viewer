@@ -31,7 +31,12 @@ async function main() {
         win.loadURL('http://localhost:5173')
         win.webContents.openDevTools()
     } else {
-        win.loadFile('index.html')
+        win.loadFile('./dist/UI/index.html')
+        win.webContents.on('before-input-event', (event, input) => {
+            if (input.alt && input.shift && input.control && input.key === 'F12') {
+                win.webContents.openDevTools()
+            }
+        })
     }
 
     danmakuReceiver.on('connected', () => {
