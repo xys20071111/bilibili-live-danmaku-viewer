@@ -15,3 +15,5 @@ cp -r ${PROJECT_ROOT}/packages/frontend/dist ./dist/UI
 yarn electron-builder --config electron-builder.json --win
 mkdir -p electron_dist/win-unpacked/static
 cp -r ${PROJECT_ROOT}/packages/overlay electron_dist/win-unpacked/static
+
+cp -r electron_dist/win-unpacked $PROJECT_ROOT/dist
