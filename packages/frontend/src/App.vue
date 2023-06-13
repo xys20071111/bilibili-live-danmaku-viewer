@@ -110,9 +110,6 @@ onMounted(() => {
   })
   window.control.danmakuEventBus.on('danmaku', (uname: string, text: string, face: string, medalName: string, medalLevel: number) => {
     danmakus.value.push({ uname, text, face: `http://localhost:4351/${face}`, medalLevel, medalName })
-    if (danmakus.value.length > 30) {
-      danmakus.value.splice(0, 1)
-    }
     nextTick(() => {
       danmakuBox.value.scrollTop = danmakuBox.value.scrollHeight
     })
@@ -133,7 +130,6 @@ onMounted(() => {
   })
 
   window.control.danmakuEventBus.on('gift', (uname: string, giftName: string, num: number, price: number, super_gift_num: number) => {
-    console.log(price)
     gift.value.push({ uname, giftName, count: num, price: super_gift_num === 0 ? 0 : price * num })
     nextTick(() => {
       giftBox.value.scrollTop = giftBox.value.scrollHeight
