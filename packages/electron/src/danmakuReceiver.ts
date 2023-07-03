@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable class-methods-use-this */
+import { COOKIES, UID } from './constant'
 import { WebSocket } from 'ws'
 import * as https from 'https'
 import { EventEmitter } from 'events'
@@ -37,6 +38,7 @@ class DanmakuReceiver extends EventEmitter {
 			headers: {
 				'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
 				host: 'api.live.bilibili.com',
+				cookie: COOKIES
 			},
 		})
 		request.on('response', (response) => {
@@ -63,7 +65,7 @@ class DanmakuReceiver extends EventEmitter {
 				this.socket.on('open', async () => {
 					// 生成并发送验证包
 					const data = JSON.stringify({
-						roomid: roomId, protover: 3, platform: 'web', uid: 0, key: roomConfig.data.token,
+						roomid: roomId, protover: 3, platform: 'web', uid: UID, key: roomConfig.data.token,
 					})
 					const authPacket = this.generatePacket(1, 7, data)
 					if (this.socket && this.socket.readyState === WebSocket.OPEN) {
