@@ -15,5 +15,6 @@ cp -r ${PROJECT_ROOT}/packages/frontend/dist ./dist/UI
 yarn electron-builder --config electron-builder.json
 mkdir -p electron_dist/linux-unpacked/static
 cp -r ${PROJECT_ROOT}/packages/overlay electron_dist/linux-unpacked/static
+cp ${PROJECT_ROOT}/static/noface.jpg electron_dist/linux-unpacked/static
 
 cp -r electron_dist/linux-unpacked/ $PROJECT_ROOT/dist

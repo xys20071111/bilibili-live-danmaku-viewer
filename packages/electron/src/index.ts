@@ -54,17 +54,18 @@ async function main() {
     })
 
     danmakuReceiver.on('DANMU_MSG', (data: Array<any>) => {
+        console.log(data)
         getUserAvater(data[2][0]).then((face) => {
             win.webContents.send('danmaku', data[2][1], data[1], face, data[3][1], data[3][0])
             sendToClient({
                 msg: 'danmaku',
                 data: { uname: data[2][1], face, text: data[1], medalName: data[3][1], medalLevel: data[3][0] }
             })
-        }).catch(() => {
-            win.webContents.send('danmaku', data[2][1], data[1], null, data[3][1], data[3][0])
+        }).catch((err) => {
+            win.webContents.send('danmaku', data[2][1], data[1], 'noface.jpg', data[3][1], data[3][0])
             sendToClient({
                 msg: 'danmaku',
-                data: { uname: data[2][1], face: null, text: data[1] }
+                data: { uname: data[2][1], face: 'noface.jpg', text: data[1] }
             })
         })
     })

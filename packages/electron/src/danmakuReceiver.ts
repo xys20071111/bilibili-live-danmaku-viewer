@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable class-methods-use-this */
-import { COOKIES, UID } from './constant'
 import { WebSocket } from 'ws'
 import * as https from 'https'
 import { EventEmitter } from 'events'
@@ -38,7 +37,6 @@ class DanmakuReceiver extends EventEmitter {
 			headers: {
 				'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36',
 				host: 'api.live.bilibili.com',
-				cookie: COOKIES
 			},
 		})
 		request.on('response', (response) => {
@@ -59,13 +57,17 @@ class DanmakuReceiver extends EventEmitter {
 					this.emit('close')
 				})
 				this.socket.on('error', () => {
-					console.log('[弹幕接收器]掉线')
+					console.log('[弹幕接收器]连接错误')
 					this.emit('close')
 				})
 				this.socket.on('open', async () => {
 					// 生成并发送验证包
 					const data = JSON.stringify({
-						roomid: roomId, protover: 3, platform: 'web', uid: UID, key: roomConfig.data.token,
+						roomid: roomId,
+						protover: 3,
+						platform: 'web',
+						uid: 6325, //随便敲一个uid,假装自己登陆了
+						key: roomConfig.data.token,
 					})
 					const authPacket = this.generatePacket(1, 7, data)
 					if (this.socket && this.socket.readyState === WebSocket.OPEN) {
@@ -126,6 +128,7 @@ class DanmakuReceiver extends EventEmitter {
 						{
 							// 这些数据大都没用，但还是留着吧
 							let jsonData = JSON.parse(packetPayload.toString('utf-8'))
+							console.log(jsonData.cmd)
 							this.emit(jsonData.cmd, jsonData.data)
 							break
 						}
@@ -141,6 +144,7 @@ class DanmakuReceiver extends EventEmitter {
 									const packetData = result.subarray(offset + 16, offset + length)
 									const data = JSON.parse(packetData.toString('utf8'))
 									const cmd = data.cmd.split(':')[0]
+									console.log(cmd)
 									this.emit(cmd, (data.info || data.data))
 									offset += length
 								}
