@@ -158,6 +158,7 @@ class DanmakuReceiver extends EventEmitter {
 		if (this.socket && this.socket.readyState === WebSocket.OPEN) {
 			this.socket.close()
 		}
+		this.socket = undefined
 		this.emit('close')
 	}
 }
