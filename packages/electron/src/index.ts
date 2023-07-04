@@ -54,7 +54,6 @@ async function main() {
     })
 
     danmakuReceiver.on('DANMU_MSG', (data: Array<any>) => {
-        console.log(data)
         getUserAvater(data[2][0]).then((face) => {
             win.webContents.send('danmaku', data[2][1], data[1], face, data[3][1], data[3][0])
             sendToClient({
@@ -80,7 +79,6 @@ async function main() {
     danmakuReceiver.on('GUARD_BUY', (data: any) => {
         const { uname, gift_name, num } = data
         getUserAvater(data.uid).then((face) => {
-
             win.webContents.send('guard', uname, gift_name, num, face)
             sendToClient({
                 msg: 'guard',

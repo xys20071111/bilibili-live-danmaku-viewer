@@ -1,5 +1,6 @@
 <template>
   <header>
+    <alert v-if="showAlert" :type="alertType" :text="alertText"/>
     <label for="roomIdInput">房间号:</label>
     <input id="roomIdInput" type="number" v-model="room" />
     <button @click="connect">连接</button>
@@ -51,6 +52,7 @@
 
 <script setup lang="ts">
 import { type Ref, ref, nextTick, onMounted } from 'vue'
+import Alert from './components/Alert.vue'
 import Danmaku from './components/Danmaku.vue'
 import Gift from './components/Gift.vue'
 import Guard from './components/Guard.vue'
@@ -59,6 +61,9 @@ const danmakuBox = ref()
 const superchatBox = ref()
 const giftBox = ref()
 const guardBox = ref()
+const showAlert = ref(false)
+const alertType = ref('')
+const alertText = ref('')
 const danmakus: Ref<Array<{
   uname: string
   text: string
@@ -103,9 +108,13 @@ function disconnect() {
 
 onMounted(() => {
   window.control.danmakuEventBus.on('connected', () => {
+    showAlert.value = false
     status.value = "已连接"
   })
   window.control.danmakuEventBus.on('close', () => {
+    showAlert.value = true
+    alertType.value = 'warn'
+    alertText.value = '连接断开了'
     status.value = '未连接'
   })
   window.control.danmakuEventBus.on('danmaku', (uname: string, text: string, face: string, medalName: string, medalLevel: number) => {

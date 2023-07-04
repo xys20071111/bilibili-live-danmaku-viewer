@@ -2,12 +2,13 @@
     <div class="danmaku">
         <img class="avatar" :src="props.face" :alt="props.nickname">
         <span class="nickname">{{ props.nickname }}</span>
-        <span class="medal" v-if="medalName">{{ props.medalName }} | {{ props.medalLevel }}</span><br/>
+        <medal class="medal" v-if="medalName" :medal-name="props.medalName" :medal-level="props.medalLevel"/><br/>
         <span>{{ props.text }}</span>
     </div>
 </template>
 
 <script setup lang="ts">
+import medal from './Medal.vue';
 const props = defineProps({
     face: {
         type: String,
@@ -37,15 +38,6 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.medal {
-    border: solid;
-    border-width: 1px;
-    border-color: white;
-    border-radius: 5px;
-    font-size: 12px;
-    color: white;
-}
-
 .avatar {
     padding: 5px;
     width: 35px;

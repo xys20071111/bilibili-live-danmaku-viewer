@@ -3,7 +3,7 @@
         <div class="superchat-header">
             <img class="avatar" :src="props.face" :alt="props.nickname">
             <span class="nickname">{{ props.nickname }}</span>
-            <span class="medal" v-if="props.medalName">{{ props.medalName }} | {{ props.medalLevel }}</span>
+            <medal class="medal" v-if="medalName" :medal-name="props.medalName" :medal-level="props.medalLevel"/>
             <span class="price">{{ props.price }}元</span>
         </div>
         <hr>
@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import medal from './Medal.vue';
 const props = defineProps({
     face: {
         type: String,

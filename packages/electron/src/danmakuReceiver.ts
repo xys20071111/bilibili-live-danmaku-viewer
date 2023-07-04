@@ -66,7 +66,8 @@ class DanmakuReceiver extends EventEmitter {
 						roomid: roomId,
 						protover: 3,
 						platform: 'web',
-						uid: 6325, //随便敲一个uid,假装自己登陆了
+						uid: 3493137941006821, //随便敲一个uid,假装自己登陆了
+						buvid3: '892BD2AB-3F01-8F8C-610E-3EE2EC85364C52632infoc',
 						key: roomConfig.data.token,
 					})
 					const authPacket = this.generatePacket(1, 7, data)
