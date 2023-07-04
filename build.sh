@@ -1,4 +1,5 @@
 #!/bin/bash
+ELECTRON_MIRROR=https://registry.npmmirror.com/-/binary/electron/
 PROJECT_ROOT=`pwd`
 
 cd ${PROJECT_ROOT}/packages/frontend/

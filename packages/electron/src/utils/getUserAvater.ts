@@ -36,6 +36,10 @@ export function getUserAvater(uid: number): Promise<string> {
                 if (data.code !== 0) {
                     reject(new Error(data.message))
                 }
+                if(!data.data.card){
+                    reject()
+                    return
+                }
                 const url = data.data.card.face.replace('http:', 'https:')
                 console.log(`[缓存头像] ${url}`)
                 https.get(url, {

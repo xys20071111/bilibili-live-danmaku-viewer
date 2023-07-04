@@ -93,10 +93,10 @@ async function main() {
         })
     })
     danmakuReceiver.on('SUPER_CHAT_MESSAGE', (data: any) => {
-        const { uname } = data.user_info
+        const { uname, uid } = data.user_info
         const { message, price } = data
         const { medal_name, medal_level } = data.medal_info
-        getUserAvater(data.user_info.uid).then((face) => {
+        getUserAvater(uid).then((face) => {
             win.webContents.send('superchat', uname, message, face, price, medal_level, medal_name)
             sendToClient({
                 msg: 'superchat',

@@ -67,7 +67,7 @@ class DanmakuReceiver extends EventEmitter {
 						protover: 3,
 						platform: 'web',
 						uid: 3493137941006821, //随便敲一个uid,假装自己登陆了
-						buvid3: '892BD2AB-3F01-8F8C-610E-3EE2EC85364C52632infoc',
+						buvid: '892BD2AB-3F01-8F8C-610E-3EE2EC85364C52632infoc',
 						key: roomConfig.data.token,
 					})
 					const authPacket = this.generatePacket(1, 7, data)
@@ -129,7 +129,6 @@ class DanmakuReceiver extends EventEmitter {
 						{
 							// 这些数据大都没用，但还是留着吧
 							let jsonData = JSON.parse(packetPayload.toString('utf-8'))
-							console.log(jsonData.cmd)
 							this.emit(jsonData.cmd, jsonData.data)
 							break
 						}
@@ -145,7 +144,6 @@ class DanmakuReceiver extends EventEmitter {
 									const packetData = result.subarray(offset + 16, offset + length)
 									const data = JSON.parse(packetData.toString('utf8'))
 									const cmd = data.cmd.split(':')[0]
-									console.log(cmd)
 									this.emit(cmd, (data.info || data.data))
 									offset += length
 								}
